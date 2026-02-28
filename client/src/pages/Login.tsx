@@ -41,11 +41,11 @@ export default function Login() {
     try {
       if (mode === 'login') {
         await login({ email, password });
+        setLocation(redirectUrl);
       } else {
         await register({ email, password, firstName, lastName });
+        setLocation('/dashboard');
       }
-      // After successful login, redirect to the original destination or dashboard
-      setLocation(redirectUrl);
     } catch (err: any) {
       // Parse error message and show user-friendly version
       let errorMessage = 'Authentication failed. Please try again.';
