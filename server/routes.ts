@@ -21,7 +21,7 @@ const PLAN_PREDICTION_LIMITS: Record<string, number> = {
 // Developer email with permanent free access
 const BYPASS_EMAILS: Record<string, string> = {
   "furlan27.mattia@gmail.com": "premium",
-  "mattia27.furlan@gmail.com": "pro",
+  "caroselloimbruttito@gmail.com": "pro",
 };
 
 export async function registerRoutes(
