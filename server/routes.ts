@@ -19,7 +19,10 @@ const PLAN_PREDICTION_LIMITS: Record<string, number> = {
 };
 
 // Developer email with permanent free access
-const DEV_EMAIL = "furlan27.mattia@gmail.com";
+const BYPASS_EMAILS: Record<string, string> = {
+  "furlan27.mattia@gmail.com": "premium",
+  "mattia27.furlan@gmail.com": "pro",
+};
 
 export async function registerRoutes(
   httpServer: Server,
@@ -72,9 +75,9 @@ export async function registerRoutes(
       
       let limit = 0;
       
-      // Developer email bypass - unlimited predictions
-      if (user.email === DEV_EMAIL) {
-        limit = Infinity;
+            if (BYPASS_EMAILS[user.email]) {
+        const bypassPlan = BYPASS_EMAILS[user.email];
+        limit = PLAN_PREDICTION_LIMITS[bypassPlan] || 0;
       } else {
         const plan = (user as any).subscriptionPlan || 'free';
         limit = PLAN_PREDICTION_LIMITS[plan] || 0;
