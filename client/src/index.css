@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-body: 'DM Sans', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Light Theme Base */
+  --background: 0 0% 100%;
+  --foreground: 224 71.4% 4.1%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 71.4% 4.1%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 71.4% 4.1%;
+  --primary: 45 93% 47%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 45 93% 47%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 45 93% 47%;
+  --radius: 0.75rem;
+}
+
+.dark {
+  /* Dark Theme Base - Deep Blue/Black */
+  --background: 224 71% 4%;
+  --foreground: 210 40% 98%;
+
+  /* Card / Surface - Slightly lighter */
+  --card: 222 47% 11%;
+  --card-foreground: 210 40% 98%;
+
+  /* Popover */
+  --popover: 222 47% 11%;
+  --popover-foreground: 210 40% 98%;
+
+  /* Primary - Gold/Amber for financial prestige */
+  --primary: 45 93% 47%;
+  --primary-foreground: 224 71% 4%;
+
+  /* Secondary - Muted Blue/Slate */
+  --secondary: 217 19% 27%;
+  --secondary-foreground: 210 40% 98%;
+
+  /* Muted */
+  --muted: 217 19% 27%;
+  --muted-foreground: 215 20.2% 65.1%;
+
+  /* Accent - Deep Gold/Bronze */
+  --accent: 45 93% 47%;
+  --accent-foreground: 224 71% 4%;
+
+  /* Destructive/Bearish - Red */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+
+  /* Constructive/Bullish - Green */
+  --success: 142 71% 45%;
+  --success-foreground: 210 40% 98%;
+
+  --border: 217 19% 27%;
+  --input: 217 19% 27%;
+  --ring: 45 93% 47%;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply font-bold tracking-tight text-foreground;
+  }
+
+  /* Trading-specific utility classes */
+  .text-bullish {
+    @apply text-emerald-400;
+  }
+
+  .text-bearish {
+    @apply text-rose-500;
+  }
+  
+  .bg-bullish-gradient {
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0) 100%);
+  }
+
+  .bg-bearish-gradient {
+    background: linear-gradient(180deg, rgba(244, 63, 94, 0.2) 0%, rgba(244, 63, 94, 0) 100%);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-secondary rounded-full hover:bg-muted-foreground/50 transition-colors;
+}
+
+/* Glassmorphism utilities */
+.glass-panel {
+  @apply bg-card/80 backdrop-blur-md border border-white/5 shadow-xl;
+}
+
+.gold-glow {
+  box-shadow: 0 0 20px -5px rgba(251, 191, 36, 0.3);
+}
+
+/* ============================================
+   Page Transitions
+   ============================================ */
+.page-transition {
+  width: 100%;
+  min-height: 100vh;
+  will-change: opacity, transform;
+}
+
+.page-enter {
+  animation: pageEnter 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.page-exit {
+  animation: pageExit 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pageExit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+/* ============================================
+   Bloom / Glow Hover Effects
+   ============================================ */
+
+/* Subtle gold bloom on interactive elements */
+.bloom-hover {
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.bloom-hover:hover {
+  box-shadow: 0 0 16px -2px hsl(var(--primary) / 0.35),
+              0 0 6px -1px hsl(var(--primary) / 0.2);
+}
+
+/* Stronger bloom for primary/gold elements */
+.bloom-gold {
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.bloom-gold:hover {
+  box-shadow: 0 0 24px -4px hsl(var(--primary) / 0.5),
+              0 0 10px -2px hsl(var(--primary) / 0.3);
+}
+
+/* Card bloom - softer, wider glow */
+.bloom-card {
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.bloom-card:hover {
+  box-shadow: 0 4px 30px -8px hsl(var(--primary) / 0.15),
+              0 0 15px -5px hsl(var(--primary) / 0.1);
+}
+
+/* Nav item bloom */
+.bloom-nav {
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.bloom-nav::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  box-shadow: 0 0 12px -2px hsl(var(--primary) / 0.3);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.bloom-nav:hover::after {
+  opacity: 1;
+}
+
+/* Subtle content fade-in for staggered elements */
+.fade-in-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+.fade-in-up-delay-1 { animation-delay: 0.05s; }
+.fade-in-up-delay-2 { animation-delay: 0.1s; }
+.fade-in-up-delay-3 { animation-delay: 0.15s; }
+.fade-in-up-delay-4 { animation-delay: 0.2s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse glow for live/active indicators */
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px hsl(var(--primary) / 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.4),
+                0 0 5px hsl(var(--primary) / 0.2);
+  }
+}

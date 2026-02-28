@@ -1,0 +1,7 @@
+.env
+node_modules
+dist
+*.zip
+attached_assets/*.zip
+app.zip
+package-lock.json
