@@ -77,8 +77,8 @@ export function registerSubscriptionRoutes(app: Express): void {
       }
 
       // TEMPORARY PREVIEW BYPASS: Grant free access to admin email for dashboard preview
-      const PREVIEW_EMAIL = "furlan27.mattia@gmail.com";
-      if (user.email === PREVIEW_EMAIL) {
+            const BYPASS_EMAILS = ["furlan27.mattia@gmail.com", "mattia27.furlan@gmail.com"];
+      if (BYPASS_EMAILS.includes(user.email)) {
         return res.json({
           plan: 'premium',
           status: 'active',
