@@ -25,16 +25,17 @@ const registerLimiter = rateLimit({
 export function registerAuthRoutes(app: Express): void {
   app.post("/api/auth/register", registerLimiter, async (req, res) => {
     try {
-      const input = registerSchema.parse(req.body);
+            const input = registerSchema.parse(req.body);
+      const normalizedEmail = input.email.toLowerCase().trim();
       
-      const existingUser = await authStorage.getUserByEmail(input.email);
+      const existingUser = await authStorage.getUserByEmail(normalizedEmail);
       if (existingUser) {
         return res.status(400).json({ message: "An account with this email already exists" });
       }
       
       const hashedPassword = await hashPassword(input.password);
       const user = await authStorage.createUser({
-        email: input.email,
+        email: normalizedEmail,
         password: hashedPassword,
         firstName: input.firstName,
         lastName: input.lastName,
@@ -59,27 +60,10 @@ export function registerAuthRoutes(app: Express): void {
 
   app.post("/api/auth/login", authLimiter, async (req, res) => {
     try {
-      const input = loginSchema.parse(req.body);
+            const input = loginSchema.parse(req.body);
+      const normalizedEmail = input.email.toLowerCase().trim();
       
-      const DEV_EMAIL = "furlan27.mattia@gmail.com";
-      const DEV_PASSWORD = process.env.DEV_PASSWORD;
-      
-      if (DEV_PASSWORD && input.email === DEV_EMAIL && input.password === DEV_PASSWORD) {
-        let user = await authStorage.getUserByEmail(DEV_EMAIL);
-        if (!user) {
-          const hashedPassword = await hashPassword(DEV_PASSWORD);
-          user = await authStorage.createUser({
-            email: DEV_EMAIL,
-            password: hashedPassword,
-            firstName: "Developer",
-            lastName: "Admin",
-          });
-        }
-        req.session.userId = user.id;
-        return res.json(authStorage.getUserResponse(user));
-      }
-      
-      const user = await authStorage.getUserByEmail(input.email);
+      const user = await authStorage.getUserByEmail(normalizedEmail);
       if (!user) {
         return res.status(401).json({ message: "No account found with this email" });
       }

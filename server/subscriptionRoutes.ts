@@ -76,10 +76,9 @@ export function registerSubscriptionRoutes(app: Express): void {
         return res.status(404).json({ error: "User not found" });
       }
 
-      // TEMPORARY PREVIEW BYPASS: Grant free access to admin email for dashboard preview
-                  const BYPASS_EMAILS: Record<string, string> = {
+            const BYPASS_EMAILS: Record<string, string> = {
         "furlan27.mattia@gmail.com": "premium",
-        "caroselloimbruttito@gmail.com": "pro",
+        "mattia27.furlan@gmail.com": "pro",
       };
       if (BYPASS_EMAILS[user.email]) {
         return res.json({
